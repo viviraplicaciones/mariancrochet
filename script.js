@@ -1,24 +1,32 @@
 /* ================================================================
-   script.js - Versión Final (FAQ Acordeón + Galería Pro)
+   script.js - Versión Final (Móvil Optimizado + Share API)
    ================================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
-    initSidebar();
-    initNavigation();
-    initDarkMode();
-    initModals(); 
-    initGallerySystem(); 
-    initFAQSystem(); // Nueva función para las preguntas
+    initSidebar();      // Menú y Compartir
+    initNavigation();   // Rutas SPA
+    initDarkMode();     // Tema
+    initModals();       // Modales generales
+    initGallerySystem(); // Galería Pro
+    initFAQSystem();    // Acordeón
+    initBackToTop();    // Nuevo: Botón subir
 });
 
-/* ================== 1. Menú Lateral ================== */
+/* ================== 1. Menú Lateral y Compartir ================== */
 function initSidebar() {
     const sidebar = document.getElementById('sidebar');
     const toggleBtnGlobal = document.getElementById('toggle-sidebar-global');
     const toggleBtnMobile = document.getElementById('toggle-sidebar-mobile');
+    const btnShare = document.getElementById('btn-compartir');
     
+    // Función para alternar estado
     const toggleSidebar = () => {
         sidebar.classList.toggle('collapsed');
+        updateToggleIcon();
+    };
+
+    // Actualizar icono del botón global
+    const updateToggleIcon = () => {
         if (toggleBtnGlobal) {
             const icon = toggleBtnGlobal.querySelector('i');
             if (sidebar.classList.contains('collapsed')) {
@@ -31,11 +39,73 @@ function initSidebar() {
         }
     };
 
+    // LÓGICA MÓVIL: Iniciar cerrado si es pantalla pequeña
+    if (window.innerWidth < 768) {
+        sidebar.classList.add('collapsed');
+        updateToggleIcon();
+    }
+
     if (toggleBtnGlobal) toggleBtnGlobal.addEventListener('click', toggleSidebar);
     if (toggleBtnMobile) toggleBtnMobile.addEventListener('click', toggleSidebar);
+
+    // LÓGICA COMPARTIR (Web Share API)
+    if (btnShare) {
+        btnShare.addEventListener('click', async (e) => {
+            e.preventDefault();
+            
+            const shareData = {
+                title: 'Marian Crochet',
+                text: '¡Mira estos hermosos tejidos a mano! 🧶✨',
+                url: window.location.href
+            };
+
+            // Intentar usar la API nativa del celular
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                    showToast('¡Gracias por compartir!');
+                } catch (err) {
+                    console.log('Compartir cancelado o error:', err);
+                }
+            } else {
+                // Fallback para PC: Copiar al portapapeles
+                navigator.clipboard.writeText(window.location.href)
+                    .then(() => showToast('Enlace copiado al portapapeles'))
+                    .catch(() => showToast('Error al copiar enlace'));
+            }
+        });
+    }
 }
 
-/* ================== 2. Navegación SPA ================== */
+/* ================== 2. Botón Volver Arriba (Back to Top) ================== */
+function initBackToTop() {
+    const mainContent = document.getElementById('main-content');
+    const btnBack = document.getElementById('btn-back-to-top');
+
+    if (!mainContent || !btnBack) return;
+
+    // Detectar Scroll
+    mainContent.addEventListener('scroll', () => {
+        if (mainContent.scrollTop > 300) {
+            btnBack.classList.remove('hidden');
+            // Pequeño timeout para permitir la transición de opacidad si se desea
+            setTimeout(() => btnBack.classList.remove('opacity-0'), 10);
+        } else {
+            btnBack.classList.add('opacity-0');
+            setTimeout(() => btnBack.classList.add('hidden'), 300);
+        }
+    });
+
+    // Acción Click
+    btnBack.addEventListener('click', () => {
+        mainContent.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+/* ================== 3. Navegación SPA ================== */
 function initNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
     const views = document.querySelectorAll('.view');
@@ -51,11 +121,26 @@ function initNavigation() {
             if (targetView) targetView.classList.add('active');
             navLinks.forEach(nav => nav.classList.remove('active'));
             link.classList.add('active');
+            
+            // En móvil, cerrar menú al navegar para ver el contenido
+            if (window.innerWidth < 768) {
+                const sidebar = document.getElementById('sidebar');
+                if (!sidebar.classList.contains('collapsed')) {
+                    sidebar.classList.add('collapsed');
+                    // Actualizar icono manualmente si es necesario
+                    const toggleBtnGlobal = document.getElementById('toggle-sidebar-global');
+                    if(toggleBtnGlobal) {
+                         const icon = toggleBtnGlobal.querySelector('i');
+                         icon.classList.remove('fa-bars');
+                         icon.classList.add('fa-arrow-right');
+                    }
+                }
+            }
         });
     });
 }
 
-/* ================== 3. Modo Oscuro ================== */
+/* ================== 4. Modo Oscuro ================== */
 function initDarkMode() {
     const btnDarkMode = document.getElementById('btn-dark-mode');
     const iconDarkMode = document.getElementById('icon-dark-mode');
@@ -84,7 +169,7 @@ function initDarkMode() {
     }
 }
 
-/* ================== 4. SISTEMA DE GALERÍA ================== */
+/* ================== 5. SISTEMA DE GALERÍA ================== */
 function initGallerySystem() {
     const filterBtns = document.querySelectorAll('.filter-btn');
     const gridContainer = document.getElementById('products-grid');
@@ -242,7 +327,7 @@ function initGallerySystem() {
     }
 }
 
-/* ================== 5. SISTEMA FAQ (ACORDEÓN) ================== */
+/* ================== 6. SISTEMA FAQ (ACORDEÓN) ================== */
 function initFAQSystem() {
     const faqBtns = document.querySelectorAll('.faq-btn');
 
@@ -252,24 +337,21 @@ function initFAQSystem() {
             const icon = btn.querySelector('i');
             const isClosed = content.classList.contains('hidden');
 
-            // 1. CERRAR todos los demás
+            // Cerrar otros
             document.querySelectorAll('.faq-content').forEach(el => {
                 if (!el.classList.contains('hidden') && el !== content) {
                     el.classList.add('hidden');
-                    // Resetear icono del hermano
                     const siblingBtn = el.previousElementSibling;
                     const siblingIcon = siblingBtn.querySelector('i');
                     if(siblingIcon) siblingIcon.classList.remove('faq-icon-rotate');
                 }
             });
 
-            // 2. TOGGLE del actual
+            // Toggle actual
             if (isClosed) {
-                // Abrir
                 content.classList.remove('hidden');
                 icon.classList.add('faq-icon-rotate');
             } else {
-                // Cerrar
                 content.classList.add('hidden');
                 icon.classList.remove('faq-icon-rotate');
             }
@@ -277,7 +359,7 @@ function initFAQSystem() {
     });
 }
 
-/* ================== 6. Modales Genéricos ================== */
+/* ================== 7. Modales Genéricos ================== */
 function initModals() {
     const btnReportar = document.getElementById('btn-reportar-fallo');
     const modalReportar = document.getElementById('modal-reportar-fallo');

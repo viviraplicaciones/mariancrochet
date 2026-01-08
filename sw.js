@@ -1,6 +1,6 @@
-/* ======================= sw.js (Service Worker - Versión Final v6) ================== */
-// IMPORTANTE: Cambio de versión a v6 para incluir los nuevos productos (Portalápices y Capibara)
-const CACHE_NAME = 'marian-crochet-v6';
+/* ======================= sw.js (Service Worker - Versión Final v7) ================== */
+// IMPORTANTE: Cambio de versión a v7 para aplicar mejoras móviles (Sidebar, Share, Back-to-top)
+const CACHE_NAME = 'marian-crochet-v7';
 
 // Lista completa de archivos para que la App funcione Offline
 const FILES_TO_CACHE = [
@@ -42,19 +42,19 @@ const FILES_TO_CACHE = [
   './images/personalizado_abuela.jpeg',
   './images/accesorio_navidad.jpeg',
 
-  // NUEVAS Imágenes de Productos (Lote Portalápices + Capibara)
-  './images/portalapiz_angela.jpeg',
+  // NUEVAS Imágenes de Productos
+  './images/portalapiz_angela.jpg',
   './images/portalapiz_baymax.png',
   './images/portalapiz_capibara.png',
   './images/portalapiz_pollito.jpeg',
   './images/portalapiz_stich.jpeg',
   './images/portalapiz_sullivan.png',
-  './images/llavero_capibara.png'
+  './images/llavero_capíbara.png'
 ];
 
 /* ====================== Evento: Install =========================== */
 self.addEventListener('install', (event) => {
-  console.log('[ServiceWorker] Instalando v6 y almacenando nuevos archivos...');
+  console.log('[ServiceWorker] Instalando v7 y actualizando interfaz...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
@@ -71,7 +71,7 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keyList) => {
       return Promise.all(keyList.map((key) => {
-        // Borramos todo caché que no sea el actual ('marian-crochet-v6')
+        // Borramos todo caché que no sea el actual ('marian-crochet-v7')
         if (key !== CACHE_NAME) {
           console.log('[ServiceWorker] Borrando caché antiguo:', key);
           return caches.delete(key);

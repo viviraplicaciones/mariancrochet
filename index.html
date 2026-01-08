@@ -10,8 +10,8 @@
   <meta content="VivirApp" name="author"/>
   
   <meta content="Marian Crochet" property="og:title"/>
-  <meta content="¡Tejidos a mano con amor!" property="og:description"/>
-  <meta content="images/banner.jpg" property="og:image"/>
+  <meta content="¡Tejidos a mano con amor! Mira nuestro catálogo de amigurumis." property="og:description"/>
+  <meta content="https://viviraplicaciones.github.io/marian-crochet/images/banner.jpg" property="og:image"/>
   <meta content="website" property="og:type"/>
   
   <link href="images/icono.jpg" rel="icon" type="image/jpeg"/>
@@ -86,9 +86,14 @@
   </aside>
   
   <button class="fixed z-20 p-2 bg-fuchsia-700 text-white rounded-md toggle-sidebar-btn hidden md:block" id="toggle-sidebar-global"><i class="fa-solid fa-bars"></i></button>
+  
+  <button id="btn-back-to-top" class="fixed z-20 bottom-14 right-2 px-3 py-2 bg-fuchsia-500 text-white font-bold rounded-lg shadow-lg md:hidden transition-transform hover:scale-105 hidden opacity-90">
+      <i class="fa-solid fa-arrow-up"></i>
+  </button>
+  
   <button class="fixed z-20 bottom-2 right-2 px-3 py-1 bg-fuchsia-700 text-white font-bold rounded-lg shadow-lg md:hidden transition-transform hover:scale-105" id="toggle-sidebar-mobile">Menú</button>
   
-  <main class="flex-1 flex flex-col h-full overflow-y-auto" id="main-content">
+  <main class="flex-1 flex flex-col h-full overflow-y-auto scroll-smooth" id="main-content">
     
     <div class="view active p-0" id="view-inicio">
         <div class="mt-0 md:mt-8 w-full max-w-6xl mx-auto bg-white md:rounded-2xl shadow-xl overflow-hidden dark:bg-gray-800">
@@ -423,7 +428,21 @@
                     <i class="fa-solid fa-palette fa-3x text-fuchsia-500"></i>
                     <h2 class="text-3xl font-bold text-gray-800 dark:text-white mt-4">&iquest;Quieres algo especial?</h2>
                     <p class="text-lg text-gray-600 mt-2 max-w-2xl mx-auto dark:text-gray-300">¡Claro que sí! Me encanta crear piezas únicas. Si tienes una idea para un amigurumi personalizado, contáctame.</p>
-                    <a class="mt-6 inline-block bg-fuchsia-500 text-white font-bold text-lg py-3 px-8 rounded-xl hover:bg-fuchsia-600 transition duration-300 shadow-lg" href="mailto:viviraplicaciones@gmail.com">Enviar Mensaje Directo</a>
+                    
+                    <div class="flex flex-wrap justify-center gap-8 mt-6">
+                        <a href="mailto:marijabe99@gmail.com" class="flex flex-col items-center group">
+                            <div class="w-16 h-16 bg-fuchsia-100 rounded-full flex items-center justify-center shadow-md group-hover:bg-fuchsia-200 transition">
+                                <i class="fa-solid fa-envelope fa-2x text-fuchsia-600"></i>
+                            </div>
+                            <span class="mt-2 font-bold text-gray-700 dark:text-gray-300 group-hover:text-fuchsia-600 transition">Email</span>
+                        </a>
+                        <a href="https://wa.me/573013811896" target="_blank" class="flex flex-col items-center group">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center shadow-md group-hover:bg-green-200 transition">
+                                <i class="fa-brands fa-whatsapp fa-2x text-green-600"></i>
+                            </div>
+                            <span class="mt-2 font-bold text-gray-700 dark:text-gray-300 group-hover:text-green-600 transition">WhatsApp</span>
+                        </a>
+                    </div>
                 </section>
                 
             </div>
@@ -433,6 +452,7 @@
    <div class="view pt-0 pb-4 px-0 md:p-10" id="view-faq">
     <div class="w-full max-w-4xl mx-auto bg-white md:rounded-2xl shadow-xl p-4 md:p-10 dark:bg-gray-800">
      <h1 class="text-3xl font-bold text-gray-800 mb-6 dark:text-white">Preguntas Frecuentes (FAQ)</h1>
+     
      <div class="space-y-2">
       <div class="faq-item border-b dark:border-gray-700">
        <button class="faq-btn w-full flex justify-between items-center py-4 text-left focus:outline-none">
@@ -449,7 +469,7 @@
         <i class="fa-solid fa-chevron-down text-lime-500 transition-transform duration-300"></i>
        </button>
        <div class="faq-content hidden overflow-hidden transition-all duration-300">
-        <p class="text-gray-600 pb-4 dark:text-gray-300">Dependiendo de la complejidad y cantidad, puede tomar entre 3 a 7 días hábiles.</p>
+        <p class="text-gray-600 pb-4 dark:text-gray-300">Dependiendo de la complejidad, tamaño y detalles, puede tomar entre 2 a 3 semanas. Ya que es un emprendimiento y aun no puedo depender economicamente del mismo, debo realizar los pedidos en horario extralaboral (por eso los tiempos un poco largo).</p>
        </div>
       </div>
       <div class="faq-item border-b dark:border-gray-700">
@@ -467,7 +487,7 @@
         <i class="fa-solid fa-chevron-down text-lime-500 transition-transform duration-300"></i>
        </button>
        <div class="faq-content hidden overflow-hidden transition-all duration-300">
-        <p class="text-gray-600 pb-4 dark:text-gray-300">El tiempo varía según el tamaño y la complejidad. Un accesorio pequeño puede tardar entre 1 y 2 horas, mientras que un muñeco puede tomar entre 6 y 12 horas, o más si tiene muchos detalles.</p>
+        <p class="text-gray-600 pb-4 dark:text-gray-300">El tiempo varía según el tamaño y la complejidad. Un accesorio pequeño puede tardar entre 1 semana, mientras que un muñeco puede tomar entre 1 y 2 semanas, o más si tiene muchos detalles.</p>
        </div>
       </div>
       <div class="faq-item border-b dark:border-gray-700">
@@ -512,7 +532,7 @@
    
   </main>
   
-  <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black bg-opacity-90 backdrop-blur-sm flex items-center justify-center p-4 hidden transition-opacity duration-300">
+  <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4 hidden transition-opacity duration-300">
     <button id="lightbox-close" class="absolute top-4 right-4 z-[70] text-white bg-gray-800 bg-opacity-50 rounded-full w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:bg-opacity-75 transition-all">
       <i class="fa-solid fa-xmark fa-xl"></i>
     </button>
@@ -549,7 +569,7 @@
     </div>
   </div>
 
-  <div class="modal fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-60" id="modal-reportar-fallo">
+  <div class="modal fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50" id="modal-reportar-fallo">
    <div class="relative p-4 w-full max-w-lg mx-auto my-12">
     <div class="relative bg-white rounded-2xl shadow-2xl dark:bg-gray-800">
      <div class="flex justify-between items-center p-5 border-b rounded-t-2xl dark:border-gray-700">
@@ -589,10 +609,6 @@
    <div class="ml-3 text-sm font-normal" id="toast-mensaje">Acción realizada.</div>
    <button aria-label="Close" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-gray-500 dark:hover:text-white dark:hover:bg-gray-700" id="toast-close" type="button"><span class="sr-only">Close</span><i class="fa-solid fa-xmark"></i></button>
   </div>
-
-  <audio id="background-music" loop>
-      <source src="https://raw.githubusercontent.com/viviraplicaciones/rifa/refs/heads/main/media/navidad.mp3" type="audio/mpeg">
-  </audio>
 
   <script async src="//www.instagram.com/embed.js"></script>
   <script type="module" src="script.js"></script>
