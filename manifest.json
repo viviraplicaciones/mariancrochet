@@ -1,0 +1,27 @@
+{
+  "name": "Marian Crochet - Tejidos Amigurumi",
+  "short_name": "Marian Crochet",
+  "description": "Catálogo exclusivo de tejidos en crochet y amigurumis hechos a mano.",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "background_color": "#FEF6FF",
+  "theme_color": "#a21caf",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "./images/icono.jpg",
+      "sizes": "64x64",
+      "type": "image/jpeg"
+    }
+  ]
+}

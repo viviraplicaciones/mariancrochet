@@ -1,0 +1,202 @@
+/* ============ Configuración Base ============ */
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* ============ Estructura del Menú Lateral (Sidebar) ============ */
+#sidebar {
+    transition: width 0.3s;
+}
+
+#sidebar.collapsed {
+    width: 4rem;
+}
+
+#sidebar:not(.collapsed) {
+    width: 15rem;
+}
+
+#sidebar.collapsed .sidebar-text {
+    display: none;
+}
+
+#sidebar.collapsed .sidebar-icon {
+    margin: 0 auto;
+}
+
+#sidebar.collapsed nav {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#sidebar.collapsed nav > div > p {
+    display: none;
+}
+
+#sidebar.collapsed nav > div {
+    padding-top: 0;
+    margin-top: 0;
+    border-top: none;
+}
+
+#sidebar.collapsed nav > a,
+#sidebar.collapsed nav > div > a {
+    padding-top: 1.125rem;
+    padding-bottom: 1.125rem;
+    padding-left: 0;
+    padding-right: 0;
+    display: flex;
+    justify-content: center;
+}
+
+#sidebar.collapsed .sidebar-icon {
+    font-size: 1.25rem;
+}
+
+/* ============ Utilidades UI ============ */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.modal {
+    display: none;
+}
+
+.modal.flex {
+    display: flex;
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* ============ Tema y Fondo ============ */
+.body-con-fondo {
+    background-image: url('./images/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.body-con-fondo::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: -1;
+    transition: background-color 0.3s;
+}
+
+.dark .body-con-fondo::before {
+    background-color: rgba(17, 24, 39, 0.92);
+}
+
+/* ============ Tipografía y Sombras ============ */
+.text-shadow-hero {
+    text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7), 
+                 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* ============ Sidebar Interactividad ============ */
+.nav-link .sidebar-icon {
+    color: #f0abfc;
+    transition: all 0.2s;
+}
+
+.nav-link:hover .sidebar-icon,
+.nav-link.active .sidebar-icon {
+    color: #FFFFFF;
+    transform: scale(1.1);
+}
+
+.toggle-sidebar-btn {
+    top: 1rem; 
+    left: 1rem;
+    transition: all 0.3s ease-in-out;
+}
+
+#sidebar:not(.collapsed) ~ main .toggle-sidebar-btn {
+    left: 15rem;
+}
+
+@media (min-width: 768px) {
+    #sidebar.collapsed ~ main .toggle-sidebar-btn {
+        left: 1rem;
+    } 
+}
+
+/* ============ Animaciones ============ */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.animate-scaleIn {
+    animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ============ Tarjetas ============ */
+.gallery-item-card {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.gallery-item-card:hover {
+    transform: translateY(-5px);
+}
+
+/* ============ MODO CINE (Solo Imagen) ============ */
+/* Esta clase se aplicará directamente a la etiqueta <img> */
+
+.lightbox-fullscreen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    
+    /* Z-Index estratégico: 
+       55 es mayor que el modal normal, 
+       pero MENOR que las flechas (60) y botón cerrar (70) */
+    z-index: 55 !important;
+    
+    background-color: black !important;
+    object-fit: contain !important; /* Asegura que la imagen se vea completa */
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    cursor: zoom-out !important; /* Cursor para indicar salir */
+    
+    /* Animación suave al entrar/salir */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Cursores normales */
+.cursor-zoom-in {
+    cursor: zoom-in;
+}
+
+/* Scroll description */
+#lightbox-desc {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+}
+.dark #lightbox-desc {
+    scrollbar-color: #4b5563 transparent;
+}

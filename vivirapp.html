@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VivirAplicaciones - Tecnología y Desarrollo</title>
+  <style>
+    /* ========= INICIO DE MODIFICACIONES (REQUERIMIENTO 1) ========= */
+    body {
+  margin: 0;
+  font-family: Arial, sans-serif; /* Corregido 'font-fy' por 'font-family' */
+  background-image: url('img/fondo.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  /*background-color: #f2f6fa; /* Asegura que haya un color de fondo en caso de que la imagen no se cargue */
+  color: #333; /* <-- Color de texto general (gris oscuro) */
+}
+/* Estilo para el encabezado */
+header {
+  background-image: url('img/vivir_banner.jpg');
+  background-size: cover; /* Asegura que la imagen de fondo cubra el área del encabezado */
+  background-position: center center; /* Centra la imagen */
+  /*background: linear-gradient(135deg, #0a1a2f, #1e3a5f); /* Superpone un degradado para asegurar contraste con el texto */
+  color: #fff; /* <-- Texto del header blanco. Correcto. */
+  padding: 10px 15px; /* Reducido de 20px a 10px en el top y bottom, y 15px a los lados */
+  text-align: center;
+}
+    header img {
+      width: 90px;
+      margin-bottom: 10px; /* Reducido de 10px */
+    }
+    .hero {
+      padding: 3px 10px; /* Reducido drásticamente (90%) */
+      text-align: center;
+      color: white; /* <-- (MODIFICADO) Estilo movido desde el HTML */
+    }
+    .hero h1 {
+      font-size: 1.5rem;
+      color: #1e3a5f;
+      margin-bottom: 5px;
+    }
+    .hero p {
+      font-size: 1.0rem;
+      max-width: 600px;
+      margin: 0 auto 10px auto; /* Reducido de 25px */
+      color: white; /* <-- (MODIFICADO) Estilo movido desde el HTML */
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background: #ff7a00;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    .services {
+      padding: 10px 10px; /* Reducido de 60px */
+      display: grid;
+      gap: 10px; /* Reducido de 30px */
+      max-width: 1100px;
+      margin: auto;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      /* color:Black; <-- (ELIMINADO) */
+    }
+    .card {
+      background: #f2f6fa;
+      padding: 10px; /* Reducido de 25px */
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      text-align: center;
+      border-top: 4px solid #ff7a00;
+    }
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 5px;
+    }
+    
+    /* ========= INICIO DE LA CORRECCIÓN DE COLOR ========= */
+    /* Reglas específicas para forzar el color en los textos de las tarjetas */
+    .card h3 {
+      color: #1e3a5f; /* Azul oscuro para los títulos de tarjeta */
+    }
+    .card p {
+      color: #333; /* Gris oscuro para el texto de tarjeta */
+    }
+    /* ========= FIN DE LA CORRECCIÓN DE COLOR ========= */
+
+    .reviews {
+      background: #ffffff;
+      padding: 10px 10px; /* Reducido de 60px */
+      /* color: black; <-- (ELIMINADO) */
+    }
+    .reviews h2 {
+      text-align: center;
+      font-size: 1.5rem;
+      color: #1e3a5f;
+      margin-bottom: 10px; /* Reducido de 40px */
+    }
+    .review-box {
+      max-width: 900px;
+      margin: auto;
+      display: grid;
+      gap: 15px; /* Reducido de 25px */
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      /* color: black; <-- (ELIMINADO) */
+    }
+    .review {
+      background: #f7f9fc;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+      border-left: 4px solid #ff7a00;
+      font-size: 0.93rem;
+      color: #333; /* <-- (MODIFICADO) Forzamos el color gris oscuro aquí */
+    }
+    /* ========= FIN DE LA CORRECCIÓN ========= */
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background: #0a1a2f;
+      color: #fff;
+      margin-top: 10px; /* Reducido de 40px */
+      font-size: 0.9rem;
+    }
+  .reveal{opacity:0; transform:translateY(30px); transition:all .6s ease;} .show{opacity:1; transform:translateY(0);} 
+  
+  /* Ajuste de sección de contacto */
+  #contacto {
+      padding: 10px 10px; /* Reducido de 60px */
+      background:#eef3f9; 
+      text-align:center;
+  }
+  #contacto h2 {
+      color:#1e3a5f; 
+      font-size:1.5rem;
+  }
+  #contacto p {
+      max-width:600px; 
+      margin:10px auto 10px; /* Reducido de 30px */
+      color:#555;
+  }
+  #contacto form {
+      max-width:500px; 
+      margin:auto; 
+      display:flex; 
+      flex-direction:column; 
+      gap:10px; /* Reducido de 15px */
+  }
+  #contacto input, #contacto textarea {
+      padding:12px; 
+      border-radius:6px; 
+      border:1px solid #ccc;
+  }
+  /* ========= FIN DE MODIFICACIONES (REQUERIMIENTO 1) ========= */
+
+  /* ========= INICIO DE ESTILOS DEL CARRUSEL MODAL ========= */
+  .carousel-modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+    display: flex; /* Usamos flex para centrar */
+    align-items: center;
+    justify-content: center;
+    opacity: 0; /* Para transición */
+    pointer-events: none; /* Para transición */
+    transition: opacity 0.3s ease;
+  }
+
+  .carousel-modal.show {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .carousel-content {
+    position: relative;
+    margin: auto;
+    padding: 0;
+    width: 90%;
+    max-width: 600px;
+  }
+
+  .carousel-slide {
+    background-color: #f2f6fa;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border-top: 4px solid #ff7a00;
+    animation: fadeIn 0.3s;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.9);}
+    to {opacity: 1; transform: scale(1);}
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+  .carousel-slide h3 {
+    color: #1e3a5f;
+    font-size: 1.8rem;
+    margin: 10px 0;
+  }
+  .carousel-slide p {
+    color: #333;
+    font-size: 1rem;
+  }
+
+  .carousel-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    border: none;
+    background: none;
+    cursor: pointer;
+    z-index: 1002;
+  }
+
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    z-index: 1001;
+  }
+  .carousel-nav:hover {
+    background-color: rgba(255,255,255,0.4);
+  }
+  .carousel-nav.prev {
+    left: 10px;
+  }
+  .carousel-nav.next {
+    right: 10px;
+  }
+
+  /* Modificación para que las tarjetas sean clickeables */
+  .services .card {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .services .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  }
+  /* ========= FIN DE ESTILOS DEL CARRUSEL MODAL ========= */
+  </style>
+</head>
+<body>
+  <header><img src="images/vivirapp.png" alt="Logo VivirAplicaciones" /><h2>VivirAplicaciones</h2><p>10 años creando tecnología</p></header>
+
+  <!-- (MODIFICADO) Se quitó el style="color: white" de aquí -->
+  <section class="hero">
+    <h2>Soluciones Web y Móviles de Alto Impacto</h2>
+    <!-- (MODIFICADO) Se quitó el style="color: white" de aquí -->
+    <p>Transformamos tus ideas en plataformas web, apps móviles y PWA modernas, rápidas y confiables. Impulsamos tu negocio con tecnología de alto nivel.</p>
+  </section>
+
+  <section class="services">
+    <div class="card"><img src="img/web.jpg?web" alt="Web" /><h3>Páginas Web</h3><p>Desarrollos profesionales, optimizados para velocidad, SEO y un diseño que cautiva a tus clientes.</p></div>
+    <div class="card"><img src="img/app.png?app" alt="App" /><h3>Apps Móviles</h3><p>Aplicaciones intuitivas y potentes para Android y iOS, diseñadas para una experiencia fluida.</p></div>
+    <div class="card"><img src="img/pwa.png?pwa" alt="PWA" /><h3>PWA</h3><p>Aplicaciones progresivas súper rápidas, seguras y funcionales incluso sin conexión.</p></div>
+    <div class="card"><img src="img/diseno.webp?design" alt="Diseño gráfico" /><h3>Diseño Gráfico</h3><p>Branding, logos, piezas publicitarias y material visual profesional para tu marca.</p></div>
+    <div class="card"><img src="img/lito.webp?print" alt="Impresión litográfica" /><h3>Impresión Litográfica</h3><p>Tarjetas, volantes, brochures, pendones, empaques y material corporativo de alta calidad.</p></div>
+  </section>
+
+  <section id="contacto" class="reveal">
+    <h2>Contacto</h2><p><strong>¿Listo para impulsar tu proyecto?</strong><br>Escríbenos y te responderemos en minutos.</p>
+    
+    <!-- ========= INICIO DE MODIFICACIÓN (REQUERIMIENTO 2) ========= -->
+    <form action="mailto:viviraplicaciones@gmail.com" method="POST" enctype="text/plain">
+      <input type="text" name="Nombre" placeholder="Tu nombre" required>
+      <input type="email" name="Email" placeholder="Tu email" required>
+      <textarea name="Mensaje" placeholder="Cuéntanos sobre tu proyecto" rows="4" required></textarea>
+      <button class="btn" type="submit">Enviar mensaje</button>
+    </form>
+    <!-- ========= FIN DE MODIFICACIÓN (REQUERIMIENTO 2) ========= -->
+  </section>
+<br>
+  <section class="reviews reveal">
+    <h2>Opiniones de Nuestros Clientes</h2>
+    <div class="review-box">
+      <div class="review">⭐ “Excelente servicio. Mi página cargó más rápido y aumentaron mis ventas.” — <b>Ana G.</b></div>
+      <div class="review">⭐ “El equipo entiende lo que uno necesita. Mi app quedó perfecta.” — <b>Carlos M.</b></div>
+      <div class="review">⭐ “Profesionales, amables y rápidos. Los recomiendo totalmente.” — <b>Laura P.</b></div>
+      <div class="review">⭐ “Mi PWA funciona increíble. Gracias por el acompañamiento.” — <b>Diego T.</b></div>
+    </div>
+  </section>
+
+  <footer>© 2025 VivirAplicaciones — Innovación que impulsa.</footer>
+
+  <!-- ========= INICIO HTML DEL CARRUSEL MODAL ========= -->
+  <div id="carousel-modal" class="carousel-modal">
+    <button id="carousel-close" class="carousel-close">&times;</button>
+    <button id="carousel-prev" class="carousel-nav prev">&lt;</button>
+    <button id="carousel-next" class="carousel-nav next">&gt;</button>
+    <div class="carousel-content">
+      <div id="carousel-slide" class="carousel-slide">
+        <img id="carousel-img" src="" alt="" />
+        <h3 id="carousel-title"></h3>
+        <p id="carousel-text"></p>
+      </div>
+    </div>
+  </div>
+  <!-- ========= FIN HTML DEL CARRUSEL MODAL ========= -->
+
+
+<script>
+// ========= INICIO SCRIPT DEL CARRUSEL Y SCROLL REVEAL =========
+document.addEventListener('DOMContentLoaded', () => {
+
+  // --- Lógica del Carrusel de Servicios ---
+  const modal = document.getElementById('carousel-modal');
+  const cards = document.querySelectorAll('.services .card');
+  const cardData = [];
+  let currentIndex = 0;
+
+  // Elementos del modal
+  const carouselImg = document.getElementById('carousel-img');
+  const carouselTitle = document.getElementById('carousel-title');
+  const carouselText = document.getElementById('carousel-text');
+  const btnClose = document.getElementById('carousel-close');
+  const btnPrev = document.getElementById('carousel-prev');
+  const btnNext = document.getElementById('carousel-next');
+
+  // 1. Recolectar datos de las tarjetas
+  cards.forEach((card, index) => {
+    const img = card.querySelector('img');
+    const title = card.querySelector('h3');
+    const text = card.querySelector('p');
+
+    cardData.push({
+      src: img ? img.src : '',
+      alt: img ? img.alt : '',
+      title: title ? title.innerText : '',
+      text: text ? text.innerText : ''
+    });
+
+    // 2. Añadir listener a cada tarjeta
+    card.addEventListener('click', () => {
+      showCarousel(index);
+    });
+  });
+
+  // 3. Función para mostrar el carrusel
+  function showCarousel(index) {
+    currentIndex = index;
+    const data = cardData[index];
+
+    carouselImg.src = data.src;
+    carouselImg.alt = data.alt;
+    carouselTitle.innerText = data.title;
+    carouselText.innerText = data.text;
+
+    // Mostrar/ocultar botones de navegación
+    btnPrev.style.display = (index === 0) ? 'none' : 'block';
+    btnNext.style.display = (index === cardData.length - 1) ? 'none' : 'block';
+
+    modal.classList.add('show');
+  }
+
+  // 4. Listeners de navegación del modal
+  btnClose.addEventListener('click', () => {
+    modal.classList.remove('show');
+  });
+
+  btnPrev.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      showCarousel(currentIndex - 1);
+    }
+  });
+
+  btnNext.addEventListener('click', () => {
+    if (currentIndex < cardData.length - 1) {
+      showCarousel(currentIndex + 1);
+    }
+  });
+
+  // Cerrar modal al hacer clic fuera del contenido
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('show');
+    }
+  });
+
+
+  // --- Lógica de Scroll Reveal (existente) ---
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('show');
+      }
+    });
+  });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+});
+// ========= FIN SCRIPT DEL CARRUSEL Y SCROLL REVEAL =========
+</script>
+</body>
+</html>
