@@ -1,6 +1,6 @@
-/* ======================= sw.js (Service Worker - Versión Final v4) ================== */
-// IMPORTANTE: Cambio de versión a v4 para forzar la actualización de script.js (Modo Cine) y index.html (Textos)
-const CACHE_NAME = 'marian-crochet-v4';
+/* ======================= sw.js (Service Worker - Versión Final v6) ================== */
+// IMPORTANTE: Cambio de versión a v6 para incluir los nuevos productos (Portalápices y Capibara)
+const CACHE_NAME = 'marian-crochet-v6';
 
 // Lista completa de archivos para que la App funcione Offline
 const FILES_TO_CACHE = [
@@ -19,7 +19,7 @@ const FILES_TO_CACHE = [
   './images/fondo.jpg',
   './images/header.jpg',
   
-  // Imágenes de Productos (Anteriores .jpg)
+  // Imágenes de Productos (Anteriores)
   './images/snoopy.jpg',
   './images/coneja.jpg',
   './images/capi.jpg',
@@ -34,20 +34,27 @@ const FILES_TO_CACHE = [
   './images/kpop2.jpg',
   './images/perry.jpg',
   './images/wasosky.jpg',
-
-  // NUEVAS Imágenes de Productos (.jpeg)
   './images/llavero_atm.jpeg',
   './images/separador_rana.jpeg',
   './images/separador_abeja.jpeg',
   './images/muñeco_escurrigato.jpeg',
   './images/personalizado_profesora.jpeg',
   './images/personalizado_abuela.jpeg',
-  './images/accesorio_navidad.jpeg'
+  './images/accesorio_navidad.jpeg',
+
+  // NUEVAS Imágenes de Productos (Lote Portalápices + Capibara)
+  './images/portalapiz_angela.jpeg',
+  './images/portalapiz_baymax.png',
+  './images/portalapiz_capibara.png',
+  './images/portalapiz_pollito.jpeg',
+  './images/portalapiz_stich.jpeg',
+  './images/portalapiz_sullivan.png',
+  './images/llavero_capibara.png'
 ];
 
 /* ====================== Evento: Install =========================== */
 self.addEventListener('install', (event) => {
-  console.log('[ServiceWorker] Instalando v4 y almacenando archivos...');
+  console.log('[ServiceWorker] Instalando v6 y almacenando nuevos archivos...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
@@ -64,7 +71,7 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keyList) => {
       return Promise.all(keyList.map((key) => {
-        // Borramos todo caché que no sea el actual ('marian-crochet-v4')
+        // Borramos todo caché que no sea el actual ('marian-crochet-v6')
         if (key !== CACHE_NAME) {
           console.log('[ServiceWorker] Borrando caché antiguo:', key);
           return caches.delete(key);

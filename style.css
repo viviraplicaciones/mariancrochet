@@ -161,9 +161,12 @@ body {
     transform: translateY(-5px);
 }
 
-/* ============ MODO CINE (Solo Imagen) ============ */
-/* Esta clase se aplicará directamente a la etiqueta <img> */
+/* ============ FAQ (Acordeón) ============ */
+.faq-icon-rotate {
+    transform: rotate(180deg);
+}
 
+/* ============ MODO CINE (Solo Imagen) ============ */
 .lightbox-fullscreen {
     position: fixed !important;
     top: 0 !important;
@@ -171,23 +174,19 @@ body {
     width: 100vw !important;
     height: 100vh !important;
     
-    /* Z-Index estratégico: 
-       55 es mayor que el modal normal, 
-       pero MENOR que las flechas (60) y botón cerrar (70) */
+    /* Z-Index estratégico: mayor que modal, menor que botones */
     z-index: 55 !important;
     
     background-color: black !important;
-    object-fit: contain !important; /* Asegura que la imagen se vea completa */
+    object-fit: contain !important; 
     border-radius: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
-    cursor: zoom-out !important; /* Cursor para indicar salir */
+    cursor: zoom-out !important; 
     
-    /* Animación suave al entrar/salir */
     transition: all 0.3s ease-in-out;
 }
 
-/* Cursores normales */
 .cursor-zoom-in {
     cursor: zoom-in;
 }

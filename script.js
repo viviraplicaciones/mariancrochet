@@ -1,14 +1,14 @@
 /* ================================================================
-   script.js - Versión Final (Slide Pantalla Completa + Ajustes UX)
+   script.js - Versión Final (FAQ Acordeón + Galería Pro)
    ================================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
     initSidebar();
     initNavigation();
     initDarkMode();
-    // initMusicPlayer(); -> Eliminado
     initModals(); 
     initGallerySystem(); 
+    initFAQSystem(); // Nueva función para las preguntas
 });
 
 /* ================== 1. Menú Lateral ================== */
@@ -105,10 +105,9 @@ function initGallerySystem() {
     const prevBtn = document.getElementById('lightbox-prev');
     const nextBtn = document.getElementById('lightbox-next');
 
-    // --- A. Lógica de Filtros (Reordenar) ---
+    // --- A. Lógica de Filtros ---
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Estilos botones
             filterBtns.forEach(b => {
                 b.classList.remove('bg-lime-500', 'text-white');
                 b.classList.add('bg-gray-200', 'text-gray-700');
@@ -143,7 +142,6 @@ function initGallerySystem() {
                     card.animate([{ transform: 'scale(0.95)', opacity: 0.7 }, { transform: 'scale(1)', opacity: 1 }], { duration: 300 });
                 });
                 others.forEach(card => gridContainer.appendChild(card));
-                
                 visibleCards = matches;
             }
         });
@@ -159,8 +157,6 @@ function initGallerySystem() {
         const category = card.getAttribute('data-category');
         const imgEl = card.querySelector('img');
         
-        // Efecto visual suave (Opacidad)
-        // NOTA: No quitamos la clase 'lightbox-fullscreen' aquí para permitir navegación continua en modo cine.
         modalImg.style.opacity = '0';
         
         setTimeout(() => {
@@ -169,7 +165,6 @@ function initGallerySystem() {
             modalImg.src = imgEl.src;
             modalCat.textContent = category.charAt(0).toUpperCase() + category.slice(1);
             
-            // Botón WhatsApp
             const phoneNumber = "573013811896"; 
             const message = `Hola, vi el "${title}" en tu web y me interesa.`;
             modalWaBtn.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
@@ -178,37 +173,28 @@ function initGallerySystem() {
         }, 200);
     };
 
-    // --- C. Evento Abrir Modal (Cualquier parte de la tarjeta) ---
+    // --- C. Evento Abrir Modal ---
     gridContainer.addEventListener('click', (e) => {
         const card = e.target.closest('.gallery-item-card');
-        
         if (card) {
             let index = visibleCards.indexOf(card);
-            // Fallback
             if (index === -1) {
                 visibleCards = [...allCards]; 
                 index = visibleCards.indexOf(card);
             }
-
             currentIndex = index;
-            // Aseguramos que al abrir empiece normal (no fullscreen)
             modalImg.classList.remove('lightbox-fullscreen');
             modalImg.classList.replace('cursor-zoom-out', 'cursor-zoom-in');
-            
             updateModalContent(currentIndex);
-
             modal.classList.remove('hidden');
             modal.classList.add('flex');
         }
     });
 
-    // --- D. Lógica de "Modo Cine" (Fullscreen) ---
+    // --- D. Lógica de "Modo Cine" ---
     modalImg.addEventListener('click', (e) => {
         e.stopPropagation(); 
-        
-        // Alternar clase en la IMAGEN
         modalImg.classList.toggle('lightbox-fullscreen');
-        
         if (modalImg.classList.contains('lightbox-fullscreen')) {
             modalImg.classList.replace('cursor-zoom-in', 'cursor-zoom-out');
             showToast("Modo Pantalla Completa");
@@ -231,39 +217,68 @@ function initGallerySystem() {
     nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showNext(); });
     prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
 
-    // Teclado
     document.addEventListener('keydown', (e) => {
         if (modal.classList.contains('hidden')) return;
         if (e.key === 'ArrowRight') showNext();
         if (e.key === 'ArrowLeft') showPrev();
         if (e.key === 'Escape') {
-            // Si está en fullscreen, salir primero
             if (modalImg.classList.contains('lightbox-fullscreen')) {
                 modalImg.classList.remove('lightbox-fullscreen');
                 modalImg.classList.replace('cursor-zoom-out', 'cursor-zoom-in');
             } else {
-                // Si no, cerrar modal
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
             }
         }
     });
 
-    // Cerrar Modal (Botón X)
     if (closeBtn) {
         closeBtn.addEventListener('click', () => {
             modal.classList.add('hidden');
             modal.classList.remove('flex');
-            // Resetear fullscreen
             modalImg.classList.remove('lightbox-fullscreen');
             modalImg.classList.replace('cursor-zoom-out', 'cursor-zoom-in');
         });
     }
 }
 
+/* ================== 5. SISTEMA FAQ (ACORDEÓN) ================== */
+function initFAQSystem() {
+    const faqBtns = document.querySelectorAll('.faq-btn');
+
+    faqBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            const isClosed = content.classList.contains('hidden');
+
+            // 1. CERRAR todos los demás
+            document.querySelectorAll('.faq-content').forEach(el => {
+                if (!el.classList.contains('hidden') && el !== content) {
+                    el.classList.add('hidden');
+                    // Resetear icono del hermano
+                    const siblingBtn = el.previousElementSibling;
+                    const siblingIcon = siblingBtn.querySelector('i');
+                    if(siblingIcon) siblingIcon.classList.remove('faq-icon-rotate');
+                }
+            });
+
+            // 2. TOGGLE del actual
+            if (isClosed) {
+                // Abrir
+                content.classList.remove('hidden');
+                icon.classList.add('faq-icon-rotate');
+            } else {
+                // Cerrar
+                content.classList.add('hidden');
+                icon.classList.remove('faq-icon-rotate');
+            }
+        });
+    });
+}
+
 /* ================== 6. Modales Genéricos ================== */
 function initModals() {
-    // Reportar Fallo
     const btnReportar = document.getElementById('btn-reportar-fallo');
     const modalReportar = document.getElementById('modal-reportar-fallo');
     if (btnReportar && modalReportar) {
@@ -274,7 +289,6 @@ function initModals() {
         });
     }
 
-    // VivirApp
     const btnVivirApp = document.getElementById('btn-vivirapp-modal');
     const modalVivirApp = document.getElementById('modal-vivirapp');
     if (btnVivirApp && modalVivirApp) {
@@ -287,7 +301,6 @@ function initModals() {
         });
     }
 
-    // Cerrar Global (clic fuera)
     document.addEventListener('click', (e) => {
         if (e.target.closest('.modal-close')) {
             const modal = e.target.closest('.modal');
@@ -296,10 +309,7 @@ function initModals() {
                 modal.classList.add('hidden');
             }
         }
-        
-        // Cerrar al dar click en el overlay oscuro
         if (e.target.classList.contains('modal')) {
-            // Si el lightbox está abierto, primero quitamos fullscreen
             if(e.target.id === 'lightbox-modal') {
                 const img = document.getElementById('lightbox-image');
                 if(img) {
